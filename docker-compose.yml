@@ -1,20 +1,20 @@
 version: '3'
 services:
-  dbos:
-    image: ${imagename}
-    restart: always
-    volumes:
+  dbos:                                    # mysql conatiner name 
+    image: ${imagename}                    # interpolating the value from .env file when the docker compose link 
+    restart: always                        
+    volumes:                                #volume implies the persistent storage which is mount to a particular folder 
       - mysql_storage:/var/lib/mysql
-    environment:
+    environment:                             # environment variables which need to be passed while running  a docker
             MYSQL_ROOT_PASSWORD: ${mysql_rp}
             MYSQL_USER: ${mysql_uname}
             MYSQL_PASSWORD: ${mysql_pass}
             MYSQL_DATABASE: ${mysql_dbname}
-    networks:
+    networks:                                 # network with bridge as driver and in a same network two containers can ping by its name 
       - net1
     
 
-  joomlaos:
+  joomlaos:                         
     image: ${joomlaimage}
     restart: always
     #depends_on:
