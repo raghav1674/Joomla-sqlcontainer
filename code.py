@@ -1,9 +1,9 @@
 import os
-from time import sleep
+
 
 os.system("clear")
 os.system("tput setaf 3")
-print("           WELCOME TO BLOGGERS-CONTAINER WORLD  ")
+print("           WELCOME TO BLOGGERS-CONTAINER WORLD  ")    # an interractive appraoch to run a docker taking input at the run time
 print("           ---------------------------------   ")
 os.system("tput setaf 7")
 image=input("Enter the sqlimage name: ")
@@ -24,11 +24,13 @@ os.system("tput setaf 7")
 os.system(f" docker  network create {network}")
 
 
-basedock=f"{forjoomla_port}:{docker_port}"
+basedock=f"{forjoomla_port}:{docker_port}"     #PAT:    HOST_PORT:SERVER_PORT(on container)
 
 
 
-with open(".env","a") as ef:
+with open(".env","w") as ef:     #here the .env file is created every time when someone config asccording its requirements
+                                     #and this .env file is what the docker compose first searches for the values where we have the 
+                                      # placeholders in compose.yml file ${}
     ef.write(f"basedock={basedock}\n")
     ef.write(f"networkname={network}:\n")
     ef.write(f"imagename={image.rstrip()}\n")
@@ -42,7 +44,8 @@ print("============== launching Joomla-Sql containers ===============")
 os.system("tput setaf 7")
 os.system(" docker-compose up -d")
 
-print(f"JOOMLA Service running at  http://192.168.29.62:{forjoomla_port}")
+print(f"JOOMLA Service running at  http://192.168.29.62:{forjoomla_port}")   #here i have hardcoded the value of ipaddress of the docker host as it will be treated as gateway  i must have use 
+                                                                                 # ifconfig enp0s3 |grep "[number]{3}.[number]{2-3}.[number]{2-3}.{number]{2-3}"
 
 
 
