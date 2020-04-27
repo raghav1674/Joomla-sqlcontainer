@@ -1,0 +1,48 @@
+version: '3'
+services:
+  dbos:
+    image: ${imagename}
+    restart: always
+    volumes:
+      - mysql_storage:/var/lib/mysql
+    environment:
+            MYSQL_ROOT_PASSWORD: ${mysql_rp}
+            MYSQL_USER: ${mysql_uname}
+            MYSQL_PASSWORD: ${mysql_pass}
+            MYSQL_DATABASE: ${mysql_dbname}
+    networks:
+      - net1
+    
+
+  joomlaos:
+    image: ${joomlaimage}
+    restart: always
+    #depends_on:
+    # - dbos
+    ports:
+      - ${basedock}
+    volumes:
+      - myjoomla_storage:/var/www/html
+    environment:
+            JOOMLA_DB_HOST: dbos
+            JOOMLA_DB_USER: root
+            JOOMLA_DB_PASSWORD: ${mysql_rp} 
+            JOOMLA_DB_NAME: ${mysql_dbname}
+    networks:
+       - net1    
+volumes:
+   mysql_storage:
+   myjoomla_storage:
+
+
+networks:       
+  net1:
+    driver: bridge
+    
+
+
+
+
+
+
+
