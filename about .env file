@@ -1,0 +1,6 @@
+.env file is what the docker compose will first look while building the image and interpolate the values that are 
+provided in the .env file with the values that are not hardcoded in docker-compose.yml.
+
+
+.env file will be created when we run the python code and we can then launch mutiple cnatiners based on that settings .
+If we want to change the settings , then we can do changes in the .env file or either re run the program
