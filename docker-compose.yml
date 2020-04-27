@@ -1,5 +1,5 @@
-version: '3'
-services:
+version: '3'    #version of docker-compose
+services:                   #implies the containers u r going to run
   dbos:                                    # mysql conatiner name 
     image: ${imagename}                    # interpolating the value from .env file when the docker compose link 
     restart: always                        
@@ -17,11 +17,11 @@ services:
   joomlaos:                         
     image: ${joomlaimage}
     restart: always
-    #depends_on:
+    #depends_on:            # to link the container and update the dns server so that two conatiner can ping by its name
     # - dbos
     ports:
-      - ${basedock}
-    volumes:
+      - ${basedock}          #patting is done : here basedock ==> host_port:container host wheere service is provided
+    volumes:                                   # for persistent storage we mounted a storage named myjoomla_storage
       - myjoomla_storage:/var/www/html
     environment:
             JOOMLA_DB_HOST: dbos
@@ -36,7 +36,9 @@ volumes:
 
 
 networks:       
-  net1:
+  net1:                                  #driver --> bridge bcoz we want connectivity to outside world and a set up of router,switch , dns server
+                                                                        #dhcp server and also we dont want to run our services on the docker host
+                                                                        #we can use host for that but here we want to serve the service in container
     driver: bridge
     
 
